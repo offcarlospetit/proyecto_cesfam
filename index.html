@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema CESFAM - Farmacia</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <!-- Encabezado -->
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Sistema de Gestión de Medicamentos
+    </div>
+  </header>  
+
+  <!-- Barra de Navegación -->
+  <nav>
+    <ul class="nav-buttons">
+      <li><a href="#" class="nav-btn-selected">Inicio</a></li>
+      <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+      <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+      <li><a href="informes.html" class="nav-btn">Informes</a></li>
+    </ul>
+  </nav>
+
+  <!-- Página Principal -->
+  <main class="main-container">
+    <section>
+      <h2>Bienvenido al Sistema de Farmacia CESFAM</h2>
+      <p>Seleccione una opción para comenzar:</p>
+      <div class="opciones-princ">
+        <div class="opcion">
+          <h3>Autenticación de Usuarios</h3>
+          <p>Acceso seguro para médicos y funcionarios</p>
+          <a href="login.html" class="btn-opcion">Acceder</a>
+        </div>
+        <div class="opcion">
+          <h3>Gestión de Stock</h3>
+          <p>Administrar ingreso, entrega, bajas y reservas</p>
+          <a href="stock.html" class="btn-opcion">Acceder</a>
+        </div>
+        <div class="opcion">
+          <h3>Prescripciones Médicas</h3>
+          <p>Generación y revisión de recetas</p>
+          <a href="prescripciones.html" class="btn-opcion">Acceder</a>
+        </div>
+        <div class="opcion">
+          <h3>Informes de Farmacia</h3>
+          <p>Emitir reportes de stock y medicamentos reservados</p>
+          <a href="informes.html" class="btn-opcion">Acceder</a>
+        </div>
+      </div>  
+    </section>
+
+    <!-- Barra Lateral -->
+    <aside>
+      <h3>Notificaciones</h3>
+      <div class="oferta">
+        <h4>Medicamentos Reservados</h4>
+        <p>Se avisará por correo/SMS al paciente al llegar stock.</p>
+      </div>
+      <div class="oferta">
+        <h4>Recordatorios</h4>
+        <p>El sistema enviará alertas para retiro en tratamientos largos.</p>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+</body>
+</html>
