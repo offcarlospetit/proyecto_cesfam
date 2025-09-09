@@ -1,0 +1,7 @@
+.vscode/
+*desktop.ini
+.DS_Store
+Thumbs.db
+image/desktop.ini
+./image/desktop.ini
+./*.ini

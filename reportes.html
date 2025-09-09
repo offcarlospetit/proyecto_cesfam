@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema CESFAM – Reportes</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script type="module" src="./js/reportes.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Sistema de Gestión de Medicamentos
+    </div>
+  </header>
+
+    <!-- Barra de Navegación -->
+    <nav>
+    <ul class="nav-buttons">
+        <li><a href="index.html" class="nav-btn">Inicio</a></li>
+        <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+        <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+        <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+        <li><a href="recordatorios.html" class="nav-btn">Recordatorios</a></li>
+        <li><a href="reportes.html" class="nav-btn-selected" aria-current="page">Reportes</a></li>
+    </ul>
+    </nav>
+
+  <main class="main-container" id="reportes-container">
+    <section class="card">
+      <h2>Reportes Transversales</h2>
+      <div class="grid-2">
+        <div class="kpi"><h3>Retiros próximos ≤3 días</h3><div id="kpi-prox" class="kpi-num">0</div></div>
+        <div class="kpi"><h3>Retiros atrasados</h3><div id="kpi-atra" class="kpi-num">0</div></div>
+        <div class="kpi"><h3>Reservas en espera</h3><div id="kpi-resv" class="kpi-num">0</div></div>
+        <div class="kpi"><h3>Items bajo crítico</h3><div id="kpi-crit" class="kpi-num">0</div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Detalle de retiros</h3>
+      <label>Filtro (RUT o medicamento)</label>
+      <input id="filtro" placeholder="Buscar..." />
+      <table class="tabla">
+        <thead><tr><th>RUT</th><th>Paciente</th><th>Medicamento</th><th>Próx. retiro</th><th>Días</th></tr></thead>
+        <tbody id="tb-detalle"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h3>Stock</h3>
+      <table class="tabla">
+        <thead><tr><th>Medicamento</th><th>Disponible</th><th>Reservado</th><th>Crítico</th><th>Estado</th></tr></thead>
+        <tbody id="tb-stock"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+        <h3>Historial de Retiros</h3>
+        <table class="tabla">
+            <thead>
+            <tr><th>RUT</th><th>Paciente</th><th>Medicamento</th><th>Fecha retiro</th><th>Cantidad</th></tr>
+            </thead>
+            <tbody id="tb-historial"></tbody>
+        </table>
+        </section>
+
+  </main>
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+</body>
+</html>

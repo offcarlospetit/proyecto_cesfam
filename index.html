@@ -28,8 +28,13 @@
       <li><a href="#" class="nav-btn-selected">Inicio</a></li>
       <li><a href="login.html" class="nav-btn">Autenticación</a></li>
       <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
       <li><a href="/prescripciones-pendientes.html" class="nav-btn">Prescripciones</a></li>
       <li><a href="informes.html" class="nav-btn">Informes</a></li>
+      <!-- Agregados botones Benjamín Cofré -->
+      <li><a href="recordatorios.html" class="nav-btn">Recordatorios</a></li> 
+      <li><a href="reportes.html" class="nav-btn">Reportes</a></li>
+      <li><a href="ayuda.html" class="nav-btn">Ayuda</a></li>
     </ul>
   </nav>
 
@@ -62,6 +67,47 @@
       </div>  
     </section>
 
+    <!-- Agregado Benjamín Cofré Modulo -->
+    <section class="card">
+      <h2>Resumen Operativo</h2>
+      <div class="grid-2">
+        <div class="kpi">
+          <h3>Retiros ≤ 3 días</h3>
+          <div id="kpi-home-prox" class="kpi-num">0</div>
+        </div>
+        <div class="kpi">
+          <h3>Retiros atrasados</h3>
+          <div id="kpi-home-atra" class="kpi-num">0</div>
+        </div>
+        <div class="kpi">
+          <h3>Reservas en espera</h3>
+          <div id="kpi-home-resv" class="kpi-num">0</div>
+        </div>
+        <div class="kpi">
+          <h3>Stock bajo crítico</h3>
+          <div id="kpi-home-crit" class="kpi-num">0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Módulos rápidos</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Recordatorios de Retiro (CU13)</h3>
+          <p>Programa avisos por correo/SMS antes del próximo retiro (con consentimiento).</p>
+          <a class="btn-opcion" href="recordatorios.html">Abrir Recordatorios</a>
+        </article>
+
+        <article class="card">
+          <h3>Reportes Transversales</h3>
+          <p>KPIs, atrasos, reservas y stock bajo crítico. Filtro por RUT/medicamento.</p>
+          <a class="btn-opcion" href="reportes.html">Abrir Reportes</a>
+        </article>
+      </div>
+    </section>
+    <!-- Agregado Benjamin Cofré Fin-->
+
     <!-- Barra Lateral -->
     <aside>
       <h3>Notificaciones</h3>
@@ -82,5 +128,9 @@
     <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
     <p>Ministerio de Salud - Chile</p>
   </footer>
+
+  <!-- Agregado Benjamín Cofré -->
+    <script type="module" src="./js/home.js" defer></script>
+  <!-- Fin Benjamín Cofré -->
 </body>
 </html>
