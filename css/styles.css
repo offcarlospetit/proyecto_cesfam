@@ -138,3 +138,43 @@ footer {
   padding: 15px;
   margin-top: 20px;
 }
+
+/* Para página de recordatorios - BeCofre */
+.grid-2{ display:grid; grid-template-columns:.3fr .3fr; gap:.5rem; }
+@media (max-width: auto){ .grid-2{ grid-template-columns:.1fr; } }
+
+.tabla { 
+  width:auto;
+  max-width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-collapse:collapse;
+ }
+.tabla th, .tabla td { padding:.7rem; border-bottom:1.5px solid #eee; }
+.pill{ padding:.2rem 1rem; border-radius:100px; background:#eef; display:inline-block; }
+.pill-orange{ background:#fff3cd; }
+.pill-yellow{ background:#ffeeba; }
+.pill-red{ background:#f8d7da; }
+
+/* KPIs home */
+.kpi{ background:#f7faff; border:1px solid #e5efff; border-radius:10px; padding:1rem; }
+.kpi-num{ font-size:2rem; font-weight:700; }
+
+/* Opcional: card base (si no la tienes) */
+.card{ background:#fff; border:1px solid #e6e6e6; border-radius:10px; padding:1rem; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+
+.alert{ margin-top:.5rem; padding:.6rem .8rem; border-radius:6px; }
+.alert-ok{ background:#e7f6ec; border:1px solid #b7dfc5; color:#0f5132; }
+.alert-error{ background:#fdecea; border:1px solid #f5c2c0; color:#842029; }
+.btn-enviar{ padding:.4rem .7rem; border:0; border-radius:6px; background:#0066cc; color:#fff; cursor:pointer; }
+.btn-enviar:disabled{ opacity:.7; cursor:not-allowed; }
+
+/* Test Ajuste: Contenido vertical en lugar de horizontal */
+#reportes-container {
+  display: flex;
+  flex-direction: column; /* Esto las apila verticalmente */
+  padding: 20px;
+  gap: 1rem;
+}

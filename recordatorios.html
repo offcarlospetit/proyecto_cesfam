@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema CESFAM – Recordatorios</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script type="module" src="./js/recordatorios.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Sistema de Gestión de Medicamentos
+    </div>
+  </header>
+
+  <!-- Barra Navegacion - Benjamín Cofré -->
+  <nav>
+  <ul class="nav-buttons">
+    <li><a href="index.html" class="nav-btn">Inicio</a></li>
+    <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+    <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+    <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+    <li><a href="recordatorios.html" class="nav-btn-selected" aria-current="page">Recordatorios</a></li>
+    <li><a href="reportes.html" class="nav-btn">Reportes</a></li>
+  </ul>
+</nav>
+
+  <main class="main-container">
+    <section class="card">
+      <h2>Programar Recordatorios de Retiro (CU13)</h2>
+      <form id="frm-recordatorio" novalidate>
+        <div class="grid-2">
+          <div>
+            <label for="rut">RUT paciente</label>
+            <input id="rut" name="rut" required placeholder="12345678-9" pattern="^\d{7,8}-[0-9Kk]$" />
+          </div>
+          <div>
+            <label for="diasAviso">Avisar antes (días)</label>
+            <input id="diasAviso" name="diasAviso" type="number" min="1" value="3" required />
+          </div>
+          <div>
+            <label for="canal">Canal</label>
+            <select id="canal" name="canal" required>
+              <option value="">Seleccione…</option>
+              <option value="EMAIL">Correo</option>
+              <option value="SMS">SMS</option>
+            </select>
+          </div>
+          <div>
+            <label for="consent">Consentimiento contacto</label>
+            <select id="consent" name="consent" required>
+              <option value="">Seleccione…</option>
+              <option value="SI">Sí</option>
+              <option value="NO">No</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit">Programar</button>
+        <div id="msg" class="alert" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>Próximos retiros (simulado)</h3>
+      <table class="tabla">
+        <thead>
+          <tr><th>RUT</th><th>Paciente</th><th>Medicamento</th><th>Próximo retiro</th><th>Días</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="tb-proximos"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+</body>
+</html>
