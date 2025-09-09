@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-  <!-- Encabezado -->
+  <!-- Encabezado con logo y título -->
   <header>
     <div class="logo">
       <div class="logo-img">
-        <!-- Logo en PNG para compatibilidad con jsPDF -->
+        <!-- Logo del sistema -->
         <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
       </div>
       <div class="logo-text">
@@ -23,92 +23,112 @@
     </div>
   </header>
 
-  <!-- Barra de Navegación -->
+  <!-- Barra de Navegación con enlaces principales -->
   <nav>
     <ul class="nav-buttons">
       <li><a href="index.html" class="nav-btn">Inicio</a></li>
       <li><a href="login.html" class="nav-btn">Autenticación</a></li>
       <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
       <li><a href="prescripciones.html" class="nav-btn-selected">Prescripciones</a></li>
+      <!-- Aquí se marca como seleccionada la página actual -->
+      <li><a href="/prescripciones-pendientes.html" class="nav-btn-selected">Prescripciones</a></li>
+      <li><a href="informes.html" class="nav-btn">Informes</a></li>
       <!-- Agregados botones Benjamín Cofré -->
       <li><a href="recordatorios.html" class="nav-btn">Recordatorios</a></li> 
       <li><a href="reportes.html" class="nav-btn">Reportes</a></li>
+      <li><a href="ayuda.html" class="nav-btn">Ayuda</a></li>
     </ul>
   </nav>
 
-  <!-- Página Principal -->
+  <!-- Contenido principal de la página -->
   <main class="main-container">
     <section>
       <h2>Prescripciones Médicas</h2>
       <p>Gestione y revise las recetas médicas de los pacientes:</p>
       <div class="opciones-princ">
 
-        <!-- CU6 Revisar Stock -->
+        <!-- CU6: Revisar Stock Disponible -->
         <div class="opcion">
           <h3>Revisar Stock Disponible</h3>
           <form id="formStock">
             <label for="buscarMedicamento">Buscar medicamento:</label><br>
-            <input type="text" id="buscarMedicamento" placeholder="Ej: Paracetamol 500mg">
-            <a href="#" class="btn-opcion" id="btnConsultar">Consultar</a>
+            <input type="text" id="buscarMedicamento" placeholder="Ej: Paracetamol 500mg"><br>
+
+            <label for="tolerancia">Tolerancia (%):</label><br>
+            <input type="number" id="tolerancia" min="0" max="100" value="95"><br>
+
+            <button type="button" class="btn-opcion" id="btnConsultar">Consultar</button>
           </form>
           <div id="resultadoStock"></div>
         </div>
 
-        <!-- CU7 Ingresar Prescripción -->
+        <!-- CU7: Ingresar Prescripción -->
         <div class="opcion">
           <h3>Generar Nueva Receta</h3>
           <form id="formPrescripcion">
             <label for="rutPaciente">RUT Paciente:</label><br>
             <input type="text" id="rutPaciente" placeholder="Ej: 12345678-9" 
-                   pattern="^\d{7,8}-[0-9Kk]$" 
-                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)"><br>
+                   pattern="^\d{7,8}-[0-9Kk]$"
+                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
+
+            <label for="nombrePaciente">Nombre Paciente:</label><br>
+            <input type="text" id="nombrePaciente" placeholder="Ej: Juan Pérez" required><br>
 
             <label for="medicamento">Medicamento:</label><br>
             <input type="text" id="medicamento" placeholder="Ej: Paracetamol 500mg" required><br>
 
             <label for="dosis">Dosis:</label><br>
-            <input type="text" id="dosis" placeholder="Ej: 1 tableta cada 8 hrs" required><br>
+            <input type="text" id="dosis" placeholder="Ej: 1 tableta" required><br>
+
+            <label for="frecuencia">Frecuencia:</label><br>
+            <input type="text" id="frecuencia" placeholder="Ej: cada 8 hrs" required><br>
 
             <label for="duracion">Duración del tratamiento:</label><br>
             <input type="text" id="duracion" placeholder="Ej: 7 días" required><br>
 
-            <a href="#" class="btn-opcion" id="btnGuardar">Guardar Prescripción</a>
+            <button type="button" class="btn-opcion" id="btnGuardar">Guardar Prescripción</button>
           </form>
           <div id="msgPrescripcion"></div>
         </div>
 
-        <!-- CU8 Emitir Receta -->
+        <!-- CU8: Emitir Receta -->
         <div class="opcion">
           <h3>Emitir Receta</h3>
           <form id="formReceta">
             <label for="recetaPaciente">RUT Paciente:</label><br>
             <input type="text" id="recetaPaciente" placeholder="Ej: 12345678-K" 
-                   pattern="^\d{7,8}-[0-9Kk]$" 
-                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)"><br>
-            <a href="#" class="btn-opcion" id="btnReceta">Generar Receta PDF</a>
+                   pattern="^\d{7,8}-[0-9Kk]$"
+                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
+            <button type="button" class="btn-opcion" id="btnReceta">Generar Receta PDF</button>
           </form>
           <div id="msgReceta"></div>
         </div>
 
-        <!-- Extra: Historial -->
+        <!-- Historial de Paciente -->
         <div class="opcion">
           <h3>Historial de Paciente</h3>
-          <a href="#" class="btn-opcion">Consultar</a>
+          <label for="rutHistorial">RUT Paciente:</label><br>
+          <input type="text" id="rutHistorial" placeholder="Ej: 12345678-K"
+                 pattern="^\d{7,8}-[0-9Kk]$"
+                 title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
+          <button type="button" class="btn-opcion" id="btnHistorial">Consultar</button>
+          <div id="resultadoHistorial"></div>
         </div>
 
       </div>
     </section>
   </main>
 
-  <!-- Pie de página -->
+  <!-- Pie de página con créditos -->
   <footer>
     <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
     <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
     <p>Ministerio de Salud - Chile</p>
   </footer>
 
-  <!-- Vinculación con jsPDF y JS externo -->
+  <!-- Librería jsPDF (para PDF) y JS propio -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="./js/prescripciones.js"></script>
 </body>
 </html>
+

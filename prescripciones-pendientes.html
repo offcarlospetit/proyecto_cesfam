@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema CESFAM - Prescripciones</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/prescripciones-pendientes.css">
+</head>
+<body>
+  <!-- Encabezado -->
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <!-- Logo en PNG para compatibilidad con jsPDF -->
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Sistema de Gestión de Medicamentos
+    </div>
+  </header>
+
+  <!-- Barra de Navegación -->
+  <nav>
+    <ul class="nav-buttons">
+      <li><a href="index.html" class="nav-btn">Inicio</a></li>
+      <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+      <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+      <li><a href="prescripciones-pendientes.html" class="nav-btn-selected">Prescripciones Pendientes</a></li>
+      <!-- Agregados botones Benjamín Cofré -->
+      <li><a href="recordatorios.html" class="nav-btn">Recordatorios</a></li> 
+      <li><a href="reportes.html" class="nav-btn">Reportes</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <section class="toolbar" aria-label="Herramientas">
+      <input type="search" class="input" placeholder="Buscar por paciente, folio o médico" aria-label="Buscar" />
+      <select class="input" aria-label="Filtrar por estado">
+        <option>Estado: todos</option>
+        <option>Pendiente</option>
+        <option>En preparación</option>
+        <option>Parcial</option>
+      </select>
+      <button class="btn">Exportar CSV</button>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Cola de prescripciones</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="table" aria-describedby="tabla-ayuda">
+          <caption id="tabla-ayuda" class="sr-only">Lista de prescripciones con acciones de preparar y ver detalle.</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Folio</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Paciente</th>
+              <th scope="col">Médico</th>
+              <th scope="col">Ítems</th>
+              <th scope="col">Estado</th>
+              <th scope="col" class="col-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-prescripciones"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="empty-state" hidden>No hay prescripciones para mostrar.</div>
+    </section>
+  </main>
+
+  <!-- Panel lateral de detalle (drawer) -->
+  <div class="drawer" id="detalle-drawer" aria-hidden="true">
+    <div class="backdrop" data-close="drawer" tabindex="-1" aria-hidden="true"></div>
+    <aside class="sheet" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-describedby="drawer-desc">
+      <header class="sheet-header">
+        <h3 id="drawer-title">Detalle de prescripción</h3>
+        <button class="icon-btn" id="btn-cerrar-drawer" aria-label="Cerrar panel">×</button>
+      </header>
+      <div class="sheet-body">
+        <div class="meta-grid">
+          <div><span class="meta-label">ID</span><strong id="det-id" class="mono"></strong></div>
+          <div><span class="meta-label">Folio</span><strong id="det-folio" class="mono"></strong></div>
+          <div><span class="meta-label">Fecha</span><strong id="det-fecha"></strong></div>
+          <div><span class="meta-label">Paciente</span><strong id="det-paciente"></strong></div>
+          <div><span class="meta-label">Médico</span><strong id="det-medico"></strong></div>
+          <div><span class="meta-label">Estado</span><span class="chip" id="det-estado"></span></div>
+        </div>
+
+        <div class="panel subpanel">
+          <div class="panel-header"><h4>Líneas de la prescripción</h4></div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Artículo</th>
+                  <th>Solicitado</th>
+                  <th>Entregado</th>
+                </tr>
+              </thead>
+              <tbody id="det-tbody-items"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="acciones-detalle">
+        <button class="btn-primary" id="btn-ir-preparar" disabled>Preparar</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Pie de página -->
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+
+  <!-- Vinculación con jsPDF y JS externo -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+   <script src="./js/stock-core.js"></script>
+  <script src="./js/prescripciones-pendientes.js"></script>
+</body>
+</html>

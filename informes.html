@@ -1,65 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema CESFAM - Informes</title>
-  <link rel="stylesheet" href="./css/styles.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema CESFAM - Informes de Stock</title>
+  <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 <body>
-  <!-- Encabezado -->
   <header>
     <div class="logo">
       <div class="logo-img">
-        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM"/>
       </div>
-      <div class="logo-text">
-        CESFAM <br> Farmacia
-      </div>
+      <div class="logo-text">CESFAM <br/> Farmacia</div>
     </div>
-    <div class="header-title">
-      Sistema de Gestión de Medicamentos
-    </div>
+    <div class="header-title">Informes de Stock</div>
   </header>
 
-  <!-- Barra de Navegación -->
   <nav>
     <ul class="nav-buttons">
       <li><a href="index.html" class="nav-btn">Inicio</a></li>
       <li><a href="login.html" class="nav-btn">Autenticación</a></li>
       <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
-      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+      <li><a href="/prescripciones-pendientes.html" class="nav-btn">Prescripciones</a></li>
       <li><a href="informes.html" class="nav-btn-selected">Informes</a></li>
+      <li><a href="ayuda.html" class="nav-btn">Ayuda</a></li>
     </ul>
   </nav>
 
-  <!-- Página Principal -->
   <main class="main-container">
     <section>
-      <h2>Informes de Farmacia</h2>
-      <p>Genere reportes sobre el estado del stock y medicamentos:</p>
+      <h2>CU5 · Informes de stock</h2>
       <div class="opciones-princ">
         <div class="opcion">
-          <h3>Reporte de Stock Actual</h3>
-          <a href="#" class="btn-opcion">Generar</a>
+          <h3>Filtros</h3>
+          <label>Buscar por código o descripción:</label><br/>
+          <input id="q" type="text" placeholder="Ej: PARA-500 o Paracetamol"/><br/>
+
+          <label>Estado:</label><br/>
+          <select id="estado">
+            <option value="todos">Todos</option>
+            <option value="disponible">Con disponible &gt; 0</option>
+            <option value="pendiente">Con pendiente de desecho &gt; 0</option>
+            <option value="sin_stock">Sin stock disponible</option>
+          </select><br/>
+
+          <a href="#" class="btn-opcion" id="btnFiltrar">Aplicar filtros</a>
+          <a href="#" class="btn-opcion" id="btnCSV">Exportar CSV</a>
+          <a href="#" class="btn-opcion" id="btnImprimir">Imprimir</a>
         </div>
-        <div class="opcion">
-          <h3>Medicamentos Reservados</h3>
-          <a href="#" class="btn-opcion">Ver Reporte</a>
-        </div>
-        <div class="opcion">
-          <h3>Historial de Entregas</h3>
-          <a href="#" class="btn-opcion">Descargar</a>
+
+        <div class="opcion" style="flex-basis:100%">
+          <h3>Resultado</h3>
+          <div id="resumen"></div>
+          <div style="overflow:auto">
+            <table id="tabla" border="1" cellpadding="6">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Descripción</th>
+                  <th>Disponible</th>
+                  <th>Reservado</th>
+                  <th>Pend. Desecho</th>
+                  <th>Stock Físico</th>
+                </tr>
+              </thead>
+              <tbody><!-- dinámico --></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Pie de página -->
   <footer>
-    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
-    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
-    <p>Ministerio de Salud - Chile</p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia</p>
   </footer>
+
+  <script src="./js/informes.js"></script>
 </body>
 </html>
