@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema CESFAM - Agregar Stock</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <!-- Encabezado -->
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Agregar Stock
+    </div>
+  </header>
+
+  <!-- Barra de Navegación -->
+  <nav>
+    <ul class="nav-buttons">
+      <li><a href="index.html" class="nav-btn">Inicio</a></li>
+      <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+      <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+      <li><a href="informes.html" class="nav-btn">Informes</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="main-container">
+    <section class="opcion">
+      <h2>Ingreso de Medicamentos</h2>
+      <p>Registra nuevas partidas (lotes) y cantidades que ingresan a bodega.</p>
+
+      <form id="formIngreso">
+        <label>Código:</label><br/>
+        <input id="codigo" type="text" placeholder="Ej: PARA-500" required><br/>
+
+        <label>Descripción:</label><br/>
+        <input id="descripcion" type="text" placeholder="Paracetamol 500 mg" required><br/>
+
+        <label>Fabricante:</label><br/>
+        <input id="fabricante" type="text" placeholder="ACME Labs" required><br/>
+
+        <label>Tipo:</label><br/>
+        <input id="tipo" type="text" placeholder="Tabletas" required><br/>
+
+        <label>Contenido / Gramaje:</label><br/>
+        <input id="contenido" type="text" placeholder="500 mg" required><br/>
+
+        <hr/>
+
+        <label>N° Lote / Partida:</label><br/>
+        <input id="partida" type="text" placeholder="L2301" required><br/>
+
+        <label>Fecha de Vencimiento:</label><br/>
+        <input id="vencimiento" type="date" required><br/>
+
+        <label>Cantidad:</label><br/>
+        <input id="cantidad" type="number" min="1" value="1" required><br/>
+
+        <button type="submit" class="btn-opcion">Ingresar</button>
+        <a class="btn-opcion" href="stock.html">Volver</a>
+      </form>
+
+      <div id="msgIngreso"></div>
+    </section>
+
+    <section class="opcion" style="flex-basis:100%">
+      <h3>Inventario</h3>
+      <div id="totales"></div>
+      <div style="overflow:auto">
+        <table id="tablaInventario" border="1" cellpadding="6">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Disponible</th>
+              <th>Reservado</th>
+              <th>Pend. Desecho</th>
+              <th>Stock Físico</th>
+            </tr>
+          </thead>
+          <tbody><!-- dinámico --></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+
+  <script src="./js/stock-core.js"></script>
+  <script>
+    // Página Agregar: solo inicializa listeners de ingreso y render
+    window.addEventListener('DOMContentLoaded', function(){
+      CESFAMStock.init();
+      CESFAMStock.bindIngreso('formIngreso', 'msgIngreso');
+      CESFAMStock.renderResumenTabla('totales', 'tablaInventario');
+    });
+  </script>
+</body>
+</html>
