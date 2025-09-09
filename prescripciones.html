@@ -47,18 +47,14 @@
         <div class="opcion">
           <h3>Revisar Stock Disponible</h3>
           <form id="formStock">
-            <!-- Campo para buscar medicamento -->
             <label for="buscarMedicamento">Buscar medicamento:</label><br>
-            <input type="text" id="buscarMedicamento" placeholder="Ej: Paracetamol 500mg">
-            
-            <!-- Campo para definir tolerancia (%) -->
+            <input type="text" id="buscarMedicamento" placeholder="Ej: Paracetamol 500mg"><br>
+
             <label for="tolerancia">Tolerancia (%):</label><br>
-            <input type="number" id="tolerancia" min="0" max="100" value="95">
-            
-            <!-- Botón de acción -->
-            <a href="#" class="btn-opcion" id="btnConsultar">Consultar</a>
+            <input type="number" id="tolerancia" min="0" max="100" value="95"><br>
+
+            <button type="button" class="btn-opcion" id="btnConsultar">Consultar</button>
           </form>
-          <!-- Aquí se mostrarán los resultados -->
           <div id="resultadoStock"></div>
         </div>
 
@@ -66,7 +62,6 @@
         <div class="opcion">
           <h3>Generar Nueva Receta</h3>
           <form id="formPrescripcion">
-            <!-- Datos del paciente -->
             <label for="rutPaciente">RUT Paciente:</label><br>
             <input type="text" id="rutPaciente" placeholder="Ej: 12345678-9" 
                    pattern="^\d{7,8}-[0-9Kk]$"
@@ -75,7 +70,6 @@
             <label for="nombrePaciente">Nombre Paciente:</label><br>
             <input type="text" id="nombrePaciente" placeholder="Ej: Juan Pérez" required><br>
 
-            <!-- Detalles de la prescripción -->
             <label for="medicamento">Medicamento:</label><br>
             <input type="text" id="medicamento" placeholder="Ej: Paracetamol 500mg" required><br>
 
@@ -88,34 +82,32 @@
             <label for="duracion">Duración del tratamiento:</label><br>
             <input type="text" id="duracion" placeholder="Ej: 7 días" required><br>
 
-            <!-- Botón para guardar la prescripción -->
-            <a href="#" class="btn-opcion" id="btnGuardar">Guardar Prescripción</a>
+            <button type="button" class="btn-opcion" id="btnGuardar">Guardar Prescripción</button>
           </form>
-          <!-- Aquí se mostrarán mensajes (ej: éxito o error) -->
           <div id="msgPrescripcion"></div>
         </div>
 
-        <!-- CU8: Emitir Receta en PDF -->
+        <!-- CU8: Emitir Receta -->
         <div class="opcion">
           <h3>Emitir Receta</h3>
           <form id="formReceta">
-            <!-- Se busca paciente para emitir receta -->
             <label for="recetaPaciente">RUT Paciente:</label><br>
             <input type="text" id="recetaPaciente" placeholder="Ej: 12345678-K" 
                    pattern="^\d{7,8}-[0-9Kk]$"
                    title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
-            
-            <!-- Botón para generar PDF -->
-            <a href="#" class="btn-opcion" id="btnReceta">Generar Receta PDF</a>
+            <button type="button" class="btn-opcion" id="btnReceta">Generar Receta PDF</button>
           </form>
           <div id="msgReceta"></div>
         </div>
 
-        <!-- Extra: Historial de paciente -->
+        <!-- Historial de Paciente -->
         <div class="opcion">
           <h3>Historial de Paciente</h3>
-          <!-- Botón para consultar historial -->
-          <a href="#" class="btn-opcion" id="btnHistorial">Consultar</a>
+          <label for="rutHistorial">RUT Paciente:</label><br>
+          <input type="text" id="rutHistorial" placeholder="Ej: 12345678-K"
+                 pattern="^\d{7,8}-[0-9Kk]$"
+                 title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
+          <button type="button" class="btn-opcion" id="btnHistorial">Consultar</button>
           <div id="resultadoHistorial"></div>
         </div>
 
@@ -135,3 +127,4 @@
   <script src="./js/prescripciones.js"></script>
 </body>
 </html>
+
