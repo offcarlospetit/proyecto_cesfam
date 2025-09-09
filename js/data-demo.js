@@ -29,3 +29,17 @@ export const retirosRealizados = [
   { rut:"9876543-2", medicamento:"Metformina 850mg", fecha:"2025-07-28", cantidad:30 },
   { rut:"12345678-9", medicamento:"Losartán 50mg", fecha:"2025-07-15", cantidad:30 }
 ];
+
+// GENE
+export function hayStockPara(medicamento, cantidad=1){
+  const item = stock.find(s => s.medicamento === medicamento);
+  return item && item.disponible >= cantidad;
+}
+
+export function marcarDisponibleReservas(){
+  reservas.forEach(r => {
+    if(r.estado === "ESPERA_STOCK" && hayStockPara(r.medicamento, r.cantidad)){
+      r.estado = "DISPONIBLE"; // CU11: llegada confirmada
+    }
+  });
+}

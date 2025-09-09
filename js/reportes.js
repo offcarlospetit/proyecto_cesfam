@@ -1,5 +1,5 @@
 // js/reportes.js
-import { pacientes, prescripciones, reservas, stock, retirosRealizados} from "./data-demo.js";
+import { pacientes, prescripciones, reservas, stock, retirosRealizados, marcarDisponibleReservas} from "./data-demo.js";
 
 const $ = (q) => document.querySelector(q);
 
@@ -79,6 +79,43 @@ document.getElementById("filtro").addEventListener("input", (e)=> {
   pintarDetalle(e.target.value);
 });
 
+function pintarReservas(){
+  marcarDisponibleReservas(); // CU11
+  const cuerpo = document.getElementById("tb-reservas-reportes");
+  cuerpo.innerHTML = reservas.map(r=>{
+    const cls = r.estado === "DISPONIBLE" ? "pill" :
+                r.estado === "AVISADO"    ? "pill pill-yellow" :
+                r.estado === "RETIRADA"   ? "pill pill-green" :
+                r.estado === "CADUCADA"   ? "pill pill-red" : "pill pill-orange";
+    const canAvisar = r.estado === "DISPONIBLE";
+    return `<tr>
+      <td>${r.rut}</td>
+      <td>${(pacientes.find(p=>p.rut===r.rut)?.nombre)||"—"}</td>
+      <td>${r.medicamento}</td>
+      <td>${r.cantidad}</td>
+      <td>${r.fechaReserva}</td>
+      <td><span class="${cls}">${r.estado}</span></td>
+      <td>
+        <button class="btn-enviar" data-id="${r.id}" ${canAvisar?'':'disabled'}>Avisar</button>
+      </td>
+    </tr>`;
+  }).join("");
+}
+
+document.addEventListener("click",(e)=>{
+  const btn = e.target.closest("#tabla-reservas-reportes .btn-enviar");
+  if(!btn) return;
+  const id = Number(btn.dataset.id);
+  const r = reservas.find(x=>x.id===id);
+  if(!r) return;
+  if(r.estado==="DISPONIBLE"){
+    r.estado = "AVISADO"; // CU12
+    alert(`Aviso enviado a ${r.rut} por ${r.medicamento}.`); // simple
+    pintarReservas();
+  }
+});
+
+pintarReservas();
 refrescarKPIs();
 pintarDetalle();
 pintarStock();

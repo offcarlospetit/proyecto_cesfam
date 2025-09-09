@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema CESFAM – Reportes</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script type="module" src="./js/reportes.js" defer></script>
+</head>
+<!-- Encabezado -->
+  <header>
+    <div class="logo">
+      <div class="logo-img">
+        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
+      </div>
+      <div class="logo-text">
+        CESFAM <br> Farmacia
+      </div>
+    </div>
+    <div class="header-title">
+      Sistema de Gestión de Medicamentos
+    </div>
+  </header>  
+
+  <!-- Barra de Navegación -->
+  <nav>
+    <ul class="nav-buttons">
+      <li><a href="index.html" class="nav-btn">Inicio</a></li>
+      <li><a href="login.html" class="nav-btn">Autenticación</a></li>
+      <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
+      <li><a href="prescripciones.html" class="nav-btn">Prescripciones</a></li>
+      <li><a href="/prescripciones-pendientes.html" class="nav-btn">Prescripciones Pendientes</a></li>
+      <li><a href="informes.html" class="nav-btn">Informes</a></li>
+      <li><a href="reservas.html" class="nav-btn-selected">Reservas</a></li>
+      <!-- Agregados botones Benjamín Cofré -->
+      <li><a href="recordatorios.html" class="nav-btn">Recordatorios</a></li> 
+      <li><a href="reportes.html" class="nav-btn">Reportes</a></li>
+      <li><a href="ayuda.html" class="nav-btn">Ayuda</a></li>
+    </ul>
+  </nav>
+
+<main class="main-container" id="reservas-container">
+  <section class="card">
+    <h2>Reservas de Medicamentos (CU10, CU11, CU12)</h2>
+    <form id="frm-reserva" class="grid-2" novalidate>
+      <div>
+        <label for="rut">RUT Paciente</label>
+        <input id="rut" name="rut" placeholder="12345678-9" pattern="^\d{7,8}-[0-9Kk]$" required />
+      </div>
+      <div>
+        <label for="med">Medicamento</label>
+        <input id="med" name="med" required placeholder="Ej: Atorvastatina 20mg" />
+      </div>
+      <div>
+        <label for="cant">Cantidad</label>
+        <input id="cant" name="cant" type="number" min="1" value="30" required />
+      </div>
+      <div>
+        <label for="canal">Canal de aviso</label>
+        <select id="canal" name="canal" required>
+          <option value="">Seleccione...</option>
+          <option value="EMAIL">Correo</option>
+          <option value="SMS">SMS</option>
+        </select>
+      </div>
+      <div>
+        <label for="consent">Consentimiento</label>
+        <select id="consent" name="consent" required>
+          <option value="">Seleccione...</option>
+          <option value="SI">Sí</option>
+          <option value="NO">No</option>
+        </select>
+      </div>
+      <button type="submit">Registrar reserva</button>
+      <div id="msg" class="alert" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>Reservas registradas</h3>
+    <table class="tabla" id="tabla-reservas">
+      <thead>
+        <tr><th>RUT</th><th>Paciente</th><th>Medicamento</th><th>Cant.</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr>
+      </thead>
+      <tbody id="tb-reservas"></tbody>
+    </table>
+  </section>
+</main>
+
+<!-- Barra Lateral -->
+    <aside>
+      <h3>Notificaciones</h3>
+      <div class="oferta">
+        <h4>Medicamentos Reservados</h4>
+        <p>Se avisará por correo/SMS al paciente al llegar stock.</p>
+      </div>
+      <div class="oferta">
+        <h4>Recordatorios</h4>
+        <p>El sistema enviará alertas para retiro en tratamientos largos.</p>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
+    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
+    <p>Ministerio de Salud - Chile</p>
+  </footer>
+
+<script type="module" src="./js/reservas.js" defer></script>
