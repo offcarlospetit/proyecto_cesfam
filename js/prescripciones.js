@@ -1,129 +1,168 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema CESFAM - Prescripciones</title>
-  <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body>
-  <!-- Encabezado con logo y título -->
-  <header>
-    <div class="logo">
-      <div class="logo-img">
-        <!-- Logo del sistema -->
-        <img src="./image/telesalud-dark-2.27cc9379.svg" alt="Logo CESFAM">
-      </div>
-      <div class="logo-text">
-        CESFAM <br> Farmacia
-      </div>
-    </div>
-    <div class="header-title">
-      Sistema de Gestión de Medicamentos
-    </div>
-  </header>
+// ===============================
+// prescripciones.js
+// Lógica de Prescripciones y Recetas
+// ===============================
 
-  <!-- Barra de Navegación -->
-  <nav>
-    <ul class="nav-buttons">
-      <li><a href="index.html" class="nav-btn">Inicio</a></li>
-      <li><a href="login.html" class="nav-btn">Autenticación</a></li>
-      <li><a href="stock.html" class="nav-btn">Gestión de Stock</a></li>
-      <li><a href="prescripciones.html" class="nav-btn-selected">Prescripciones</a></li>
-      <li><a href="informes.html" class="nav-btn">Informes</a></li>
-      <li><a href="ayuda.html" class="nav-btn">Ayuda</a></li>
-    </ul>
-  </nav>
+// Simulación de base de datos
+let prescripciones = []; // Guarda prescripciones
+let contadorFolio = 1;   // Folio único incremental
 
-  <!-- Contenido Principal -->
-  <main class="main-container">
-    <section>
-      <h2>Prescripciones Médicas</h2>
-      <p>Gestione y revise las recetas médicas de los pacientes:</p>
-      <div class="opciones-princ">
+// -------------------------------
+// CU6: Consultar Stock Disponible
+// -------------------------------
+document.getElementById("btnConsultar").addEventListener("click", function (e) {
+  e.preventDefault();
 
-        <!-- CU6: Revisar Stock Disponible -->
-        <div class="opcion">
-          <h3>Revisar Stock Disponible</h3>
-          <form id="formStock">
-            <label for="buscarMedicamento">Buscar medicamento:</label><br>
-            <input type="text" id="buscarMedicamento" placeholder="Ej: Paracetamol 500mg"><br>
+  const medicamento = document.getElementById("buscarMedicamento").value.trim();
+  const tolerancia = parseInt(document.getElementById("tolerancia").value);
 
-            <label for="tolerancia">Tolerancia (%):</label><br>
-            <input type="number" id="tolerancia" min="0" max="100" value="95"><br>
+  let resultado = "";
 
-            <button type="button" class="btn-opcion" id="btnConsultar">Consultar</button>
-          </form>
-          <div id="resultadoStock"></div>
-        </div>
+  if (medicamento === "") {
+    resultado = "<p style='color:red'>⚠️ Ingrese un medicamento.</p>";
+  } else {
+    const stockSimulado = Math.floor(Math.random() * 100);
+    const stockRequerido = 50;
 
-        <!-- CU7: Ingresar Prescripción -->
-        <div class="opcion">
-          <h3>Generar Nueva Receta</h3>
-          <form id="formPrescripcion">
-            <label for="rutPaciente">RUT Paciente:</label><br>
-            <input type="text" id="rutPaciente" placeholder="Ej: 12345678-9" 
-                   pattern="^\d{7,8}-[0-9Kk]$"
-                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
+    if (stockSimulado >= (stockRequerido * tolerancia) / 100) {
+      resultado = `<p style='color:green'>✅ Stock suficiente: ${stockSimulado} unidades disponibles.</p>`;
+    } else {
+      resultado = `<p style='color:orange'>⚠️ Stock insuficiente (${stockSimulado} unidades). Considere alternativa.</p>`;
+    }
+  }
 
-            <label for="nombrePaciente">Nombre Paciente:</label><br>
-            <input type="text" id="nombrePaciente" placeholder="Ej: Juan Pérez" required><br>
+  document.getElementById("resultadoStock").innerHTML = resultado;
+});
 
-            <label for="medicamento">Medicamento:</label><br>
-            <input type="text" id="medicamento" placeholder="Ej: Paracetamol 500mg" required><br>
+// -------------------------------
+// CU7: Guardar Prescripción
+// -------------------------------
+document.getElementById("btnGuardar").addEventListener("click", function (e) {
+  e.preventDefault();
 
-            <label for="dosis">Dosis:</label><br>
-            <input type="text" id="dosis" placeholder="Ej: 1 tableta" required><br>
+  const rut = document.getElementById("rutPaciente").value.trim();
+  const nombre = document.getElementById("nombrePaciente").value.trim();
+  const medicamento = document.getElementById("medicamento").value.trim();
+  const dosis = document.getElementById("dosis").value.trim();
+  const frecuencia = document.getElementById("frecuencia").value.trim();
+  const duracion = document.getElementById("duracion").value.trim();
 
-            <label for="frecuencia">Frecuencia:</label><br>
-            <input type="text" id="frecuencia" placeholder="Ej: cada 8 hrs" required><br>
+  if (!rut || !nombre || !medicamento || !dosis || !frecuencia || !duracion) {
+    document.getElementById("msgPrescripcion").innerHTML =
+      "<p style='color:red'>⚠️ Complete todos los campos.</p>";
+    return;
+  }
 
-            <label for="duracion">Duración del tratamiento:</label><br>
-            <input type="text" id="duracion" placeholder="Ej: 7 días" required><br>
+  const duplicada = prescripciones.some(
+    (p) => p.rut === rut && p.medicamento.toLowerCase() === medicamento.toLowerCase()
+  );
 
-            <button type="button" class="btn-opcion" id="btnGuardar">Guardar Prescripción</button>
-          </form>
-          <div id="msgPrescripcion"></div>
-        </div>
+  if (duplicada) {
+    document.getElementById("msgPrescripcion").innerHTML =
+      "<p style='color:red'>⚠️ Ya existe una prescripción de este medicamento para este paciente.</p>";
+    return;
+  }
 
-        <!-- CU8: Emitir Receta -->
-        <div class="opcion">
-          <h3>Emitir Receta</h3>
-          <form id="formReceta">
-            <label for="recetaPaciente">RUT Paciente:</label><br>
-            <input type="text" id="recetaPaciente" placeholder="Ej: 12345678-K" 
-                   pattern="^\d{7,8}-[0-9Kk]$"
-                   title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
-            <button type="button" class="btn-opcion" id="btnReceta">Generar Receta PDF</button>
-          </form>
-          <div id="msgReceta"></div>
-        </div>
+  const nuevaPrescripcion = {
+    rut,
+    nombre,
+    medicamento,
+    dosis,
+    frecuencia,
+    duracion,
+    fecha: new Date().toLocaleString(),
+    folio: contadorFolio++
+  };
 
-        <!-- Historial de Paciente -->
-        <div class="opcion">
-          <h3>Historial de Paciente</h3>
-          <label for="rutHistorial">RUT Paciente:</label><br>
-          <input type="text" id="rutHistorial" placeholder="Ej: 12345678-K"
-                 pattern="^\d{7,8}-[0-9Kk]$"
-                 title="Ingrese RUT sin puntos, con guion y dígito verificador (0-9 o K)" required><br>
-          <button type="button" class="btn-opcion" id="btnHistorial">Consultar</button>
-          <div id="resultadoHistorial"></div>
-        </div>
+  prescripciones.push(nuevaPrescripcion);
 
-      </div>
-    </section>
-  </main>
+  document.getElementById("msgPrescripcion").innerHTML =
+    `<p style='color:green'>✅ Prescripción guardada con folio #${nuevaPrescripcion.folio}.</p>`;
 
-  <!-- Pie de Página -->
-  <footer>
-    <p>Desarrollado por <span class="developer">Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</span></p>
-    <p>&copy; 2025 - Sistema CESFAM Farmacia - Derechos Reservados</p>
-    <p>Ministerio de Salud - Chile</p>
-  </footer>
+  document.getElementById("formPrescripcion").reset();
+});
 
-  <!-- Librerías -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="./js/prescripciones.js"></script>
-</body>
-</html>
+// -------------------------------
+// CU8: Emitir Receta en PDF
+// -------------------------------
+document.getElementById("btnReceta").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const rutPaciente = document.getElementById("recetaPaciente").value.trim();
+  const prescripcion = prescripciones.find((p) => p.rut === rutPaciente);
+
+  if (!prescripcion) {
+    document.getElementById("msgReceta").innerHTML =
+      "<p style='color:red'>⚠️ No se encontró prescripción para este paciente.</p>";
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text("CESFAM - Receta Médica", 20, 20);
+  doc.setFontSize(11);
+  doc.text(`Folio: ${prescripcion.folio}`, 20, 30);
+  doc.text(`Fecha: ${prescripcion.fecha}`, 20, 40);
+  doc.text(`Paciente: ${prescripcion.nombre} (${prescripcion.rut})`, 20, 50);
+
+  doc.text("Medicamento:", 20, 70);
+  doc.text(`${prescripcion.medicamento}`, 50, 70);
+
+  doc.text("Dosis:", 20, 80);
+  doc.text(`${prescripcion.dosis}`, 50, 80);
+
+  doc.text("Frecuencia:", 20, 90);
+  doc.text(`${prescripcion.frecuencia}`, 50, 90);
+
+  doc.text("Duración:", 20, 100);
+  doc.text(`${prescripcion.duracion}`, 50, 100);
+
+  doc.text("________________________", 20, 130);
+  doc.text("Firma Médico", 20, 140);
+
+  doc.save(`Receta_${prescripcion.folio}.pdf`);
+
+  document.getElementById("msgReceta").innerHTML =
+    `<p style='color:green'>✅ Receta emitida en PDF (folio #${prescripcion.folio}).</p>`;
+});
+
+// -------------------------------
+// Historial de Paciente
+// -------------------------------
+document.getElementById("btnHistorial").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const rut = document.getElementById("rutHistorial").value.trim();
+
+  if (!rut) {
+    document.getElementById("resultadoHistorial").innerHTML =
+      "<p style='color:red'>⚠️ Ingrese un RUT para consultar el historial.</p>";
+    return;
+  }
+
+  const historial = prescripciones.filter((p) => p.rut === rut);
+
+  if (historial.length === 0) {
+    document.getElementById("resultadoHistorial").innerHTML =
+      "<p>No hay prescripciones registradas para este paciente.</p>";
+    return;
+  }
+
+  let tabla = "<table border='1' cellpadding='5'><tr><th>Folio</th><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th><th>Fecha</th></tr>";
+  historial.forEach((p) => {
+    tabla += `<tr>
+      <td>${p.folio}</td>
+      <td>${p.medicamento}</td>
+      <td>${p.dosis}</td>
+      <td>${p.frecuencia}</td>
+      <td>${p.duracion}</td>
+      <td>${p.fecha}</td>
+    </tr>`;
+  });
+  tabla += "</table>";
+
+  document.getElementById("resultadoHistorial").innerHTML = tabla;
+});
 
