@@ -53,7 +53,7 @@ export default function StockBajas() {
         <section className="space-y-4">
             {/* Back / breadcrumb */}
             <div className="flex items-center justify-between">
-                <Link to="/stock" className="btn-secondary">← Volver a Gestión de Stock</Link>
+                <Link to="/stock" className="btn">← Volver a Gestión de Stock</Link>
             </div>
 
             <h2 className="text-2xl font-semibold">Bajas de Stock</h2>
@@ -87,7 +87,7 @@ export default function StockBajas() {
                 </div>
 
                 <div className="md:col-span-2 flex gap-2 justify-end">
-                    <Link to="/stock" className="btn-secondary">Cancelar</Link>
+                    <Link to="/stock" className="btn-danger">Cancelar</Link>
                     <button type="submit" className="btn">Registrar baja</button>
                 </div>
             </form>
