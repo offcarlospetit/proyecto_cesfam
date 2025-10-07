@@ -122,3 +122,104 @@ button { @apply rounded-md; }
 @media (prefers-color-scheme: light) {
   :root { color-scheme: light; }
 }
+
+/* --- Layout base BC --- */
+.container-page { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.main-container { display: flex; flex-direction: column; gap: 18px; padding: 16px 0 28px; }
+
+/* Tarjetas BC */
+.card {
+  background:#fff; border:1px solid #e5e7eb; border-radius:12px;
+  padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+
+/* Títulos en tarjetas BC */
+.card > h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+.card > h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+
+/* --- KPIs BC --- */
+.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media (max-width: 1000px){ .kpi-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width: 560px){ .kpi-grid { grid-template-columns:1fr; } }
+
+.kpi {
+  background:#f8fbff; border:1px solid #e7f0ff; border-radius:12px;
+  padding:14px 16px; text-align:left;
+}
+.kpi h3 { font-size:.95rem; color:#1d4ed8; margin:0 0 6px; }
+.kpi-num { font-size:1.8rem; font-weight:700; color:#0f172a; line-height:1; }
+
+/* --- Tablas BC --- */
+.tabla { width:100%; border-collapse:collapse; margin-top:8px; }
+.tabla thead th {
+  text-align:left; font-weight:600; color:#334155; background:#f8fafc;
+  border-bottom:1px solid #e5e7eb; padding:10px 12px;
+}
+.tabla td {
+  padding:10px 12px; border-bottom:1px solid #f1f5f9; vertical-align:middle;
+}
+.tabla tbody tr:hover { background:#f8fafc; }
+
+/* --- Pills BC (chips de estado) --- */
+.pill {
+  display:inline-block; padding:2px 10px; border-radius:9999px;
+  font-size:.85rem; line-height:1.4; border:1px solid transparent;
+}
+.pill-orange { background:#fff7ed; color:#9a3412; border-color:#fde68a; }
+.pill-yellow { background:#fefce8; color:#854d0e; border-color:#fde68a; }
+.pill-red    { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
+.pill-green  { background:#ecfdf5; color:#065f46; border-color:#a7f3d0; }
+
+/* --- Botones BC --- */
+.btn-opcion, .btn-enviar {
+  padding:.5rem .85rem; border:0; border-radius:8px; background:#0a66c2; color:#fff;
+  font-weight:600; cursor:pointer; box-shadow:0 1px 1px rgba(0,0,0,.06);
+}
+.btn-enviar:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* --- Footer BC --- */
+footer .container-page { padding-top:14px; padding-bottom:18px; }
+
+/* ---------- Formulario BC ---------- */
+.form-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+  margin-top: 8px;
+}
+@media (max-width: 820px){
+  .form-grid{ grid-template-columns: 1fr; }
+}
+
+.form-field label{
+  display:block;
+  font-weight:600;
+  color:#0f172a;       /* slate-900 */
+  margin-bottom: 6px;
+}
+
+.input, .select{
+  width:100%;
+  background:#fff;
+  border:1px solid #d1d5db;     /* slate-300 */
+  border-radius:10px;
+  padding:10px 12px;
+  line-height:1.4;
+  transition:border-color .15s, box-shadow .15s;
+}
+.input:focus, .select:focus{
+  outline:none;
+  border-color:#0a66c2;
+  box-shadow:0 0 0 3px rgba(10,102,194,.15);
+}
+
+.form-actions{
+  margin-top: 8px;
+}
+
+.hint{
+  display:block;
+  margin-top:6px;
+  font-size:.85rem;
+  color:#64748b;       /* slate-500 */
+}

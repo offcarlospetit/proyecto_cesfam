@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.ini
+*.bat
+run_proyecto_cesfam.bat
