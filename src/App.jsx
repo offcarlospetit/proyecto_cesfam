@@ -1,4 +1,7 @@
-import { NavLink, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import SiteHeader from "./components/SiteHeader.jsx";
+import SiteFooter from "./components/SiteFooter.jsx";
+
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Stock from "./pages/Stock.jsx";
@@ -12,46 +15,25 @@ import Recordatorios from "./pages/Recordatorios.jsx";
 import Reportes from "./pages/Reportes.jsx";
 import Ayuda from "./pages/Ayuda.jsx";
 
-const navLink = ({ isActive }) =>
-  `px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-100 ${isActive ? "bg-slate-200" : ""}`;
+const MENU = [
+  { to: "/", label: "Inicio" },
+  { to: "/login", label: "Autenticación" },
+  { to: "/stock", label: "Gestión de Stock" },
+  { to: "/prescripciones", label: "Prescripciones" },
+  { to: "/prescripciones-pendientes", label: "Prescripciones Pendientes" },
+  { to: "/informes", label: "Informes" },
+  { to: "/reservas", label: "Reservas" },
+  { to: "/recordatorios", label: "Recordatorios" },
+  { to: "/reportes", label: "Reportes" },
+  { to: "/ayuda", label: "Ayuda" },
+];
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Header */}
-      <header className="border-b bg-white">
-        <div className="container-page flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded bg-slate-200" />
-            <div className="leading-tight">
-              <div className="font-semibold">CESFAM</div>
-              <div className="text-xs text-slate-500">Farmacia</div>
-            </div>
-          </div>
-          <div className="ml-auto text-sm text-slate-600">
-            Sistema de Gestión de Medicamentos
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+      <SiteHeader menu={MENU} />
 
-      {/* Navbar */}
-      <nav className="bg-white">
-        <div className="container-page flex flex-wrap gap-1">
-          <NavLink to="/" className={navLink}>Inicio</NavLink>
-          <NavLink to="/login" className={navLink}>Autenticación</NavLink>
-          <NavLink to="/stock" className={navLink}>Gestión de Stock</NavLink>
-          <NavLink to="/prescripciones" className={navLink}>Prescripciones</NavLink>
-          <NavLink to="/prescripciones-pendientes" className={navLink}>Prescripciones Pendientes</NavLink>
-          <NavLink to="/informes" className={navLink}>Informes</NavLink>
-          <NavLink to="/reservas" className={navLink}>Reservas</NavLink>
-          <NavLink to="/recordatorios" className={navLink}>Recordatorios</NavLink>
-          <NavLink to="/reportes" className={navLink}>Reportes</NavLink>
-          <NavLink to="/ayuda" className={navLink}>Ayuda</NavLink>
-        </div>
-      </nav>
-
-      {/* Rutas */}
-      <main className="container-page">
+      <main className="container-page grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -68,16 +50,14 @@ export default function App() {
           <Route path="/recordatorios" element={<Recordatorios />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/ayuda" element={<Ayuda />} />
+
+          {/* Fallback opcional */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-white">
-        <div className="container-page text-xs text-slate-500">
-          <p>Desarrollado por Equipo Caso 17 “Automatización Libreta de Medicamentos CESFAM”</p>
-          <p>© 2025 - Sistema CESFAM Farmacia - Ministerio de Salud - Chile</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
+
