@@ -11,14 +11,14 @@ export default function Stock() {
                     <h3 className="text-lg font-semibold mb-2">Ingreso de Medicamentos</h3>
                     <p className="text-sm text-slate-600">Registre nuevas partidas (lotes) y cantidades que ingresan a bodega.</p>
                     <div className="mt-3">
-                        <Link to="/stock/agregar" className="btn-secondary">Ir a Agregar Stock</Link>
+                        <Link to="/stock/agregar" className="btn">Ir a Agregar Stock</Link>
                     </div>
                 </div>
                 <div className="card">
                     <h3 className="text-lg font-semibold mb-2">Bajas de Stock</h3>
                     <p className="text-sm text-slate-600">Registre vencimientos, mal estado u otros motivos de baja.</p>
                     <div className="mt-3">
-                        <Link to="/stock/bajas" className="btn-secondary">Ir a Bajas</Link>
+                        <Link to="/stock/bajas" className="btn">Ir a Bajas</Link>
                     </div>
                 </div>
             </div>

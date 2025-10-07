@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* ------------------------------
-   THEME TOKENS (Tailwind v4)
-   Define colores custom usados en helpers
---------------------------------*/
 @theme {
   --color-brand: #2980b9;
   --color-brand-dark: #1c5980;
@@ -12,13 +8,9 @@
   --color-nav: #004080;
   --color-navAlt: #0066cc;
 
-  /* Para utilidades tipo border-border */
   --color-border: #e5e7eb;
 }
 
-/* ------------------------------
-   BASE (tokens y resets suaves)
---------------------------------*/
 @layer base {
   html, body {
     @apply min-h-screen;
@@ -41,19 +33,20 @@
   }
 }
 
-/* ------------------------------
-   COMPONENTS (helpers reusables)
---------------------------------*/
 @layer components {
-  /* Contenedor de página */
   .container-page {
     @apply mx-auto max-w-6xl px-4 py-6;
   }
 
-  /* Botones */
   .btn {
     @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium
            bg-brand text-white hover:bg-brand-dark transition-colors duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium
+           bg-danger text-white hover:bg-red-400 transition-colors duration-150
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
@@ -63,7 +56,6 @@
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  /* Tarjetas y paneles */
   .card {
     @apply rounded-lg border border-slate-200 bg-white p-4 shadow-sm;
   }
@@ -75,13 +67,11 @@
     @apply flex items-center justify-between px-4 py-3 border-b border-slate-200;
   }
 
-  /* Inputs */
   .input {
     @apply w-full rounded border border-slate-300 bg-white px-3 py-2 text-sm
            outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand;
   }
 
-  /* Tablas */
   .table {
     @apply w-full border-collapse bg-white;
   }
@@ -92,7 +82,6 @@
     @apply px-3 py-2 border-b border-slate-200 text-left align-middle;
   }
 
-  /* Chips / Badges (estados) */
   .chip {
     @apply inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs;
   }
@@ -110,9 +99,6 @@
   }
 }
 
-/* ------------------------------
-   Genéricos (opcionales)
---------------------------------*/
 h1 { @apply text-4xl font-bold leading-tight; }
 h2 { @apply text-2xl font-semibold; }
 h3 { @apply text-lg font-semibold; }
@@ -123,21 +109,17 @@ button { @apply rounded-md; }
   :root { color-scheme: light; }
 }
 
-/* --- Layout base BC --- */
 .container-page { max-width: 1100px; margin: 0 auto; padding: 16px; }
 .main-container { display: flex; flex-direction: column; gap: 18px; padding: 16px 0 28px; }
 
-/* Tarjetas BC */
 .card {
   background:#fff; border:1px solid #e5e7eb; border-radius:12px;
   padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04);
 }
 
-/* Títulos en tarjetas BC */
 .card > h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
 .card > h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
 
-/* --- KPIs BC --- */
 .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 @media (max-width: 1000px){ .kpi-grid { grid-template-columns:repeat(2,1fr); } }
 @media (max-width: 560px){ .kpi-grid { grid-template-columns:1fr; } }
@@ -149,7 +131,6 @@ button { @apply rounded-md; }
 .kpi h3 { font-size:.95rem; color:#1d4ed8; margin:0 0 6px; }
 .kpi-num { font-size:1.8rem; font-weight:700; color:#0f172a; line-height:1; }
 
-/* --- Tablas BC --- */
 .tabla { width:100%; border-collapse:collapse; margin-top:8px; }
 .tabla thead th {
   text-align:left; font-weight:600; color:#334155; background:#f8fafc;
@@ -160,7 +141,6 @@ button { @apply rounded-md; }
 }
 .tabla tbody tr:hover { background:#f8fafc; }
 
-/* --- Pills BC (chips de estado) --- */
 .pill {
   display:inline-block; padding:2px 10px; border-radius:9999px;
   font-size:.85rem; line-height:1.4; border:1px solid transparent;
@@ -170,17 +150,19 @@ button { @apply rounded-md; }
 .pill-red    { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
 .pill-green  { background:#ecfdf5; color:#065f46; border-color:#a7f3d0; }
 
-/* --- Botones BC --- */
 .btn-opcion, .btn-enviar {
   padding:.5rem .85rem; border:0; border-radius:8px; background:#0a66c2; color:#fff;
   font-weight:600; cursor:pointer; box-shadow:0 1px 1px rgba(0,0,0,.06);
 }
 .btn-enviar:disabled{ opacity:.6; cursor:not-allowed; }
 
-/* --- Footer BC --- */
+.btn-danger {
+  padding:.5rem .85rem; border:0; border-radius:8px; background:#dc2626; color:#fff;
+  font-weight:600; cursor:pointer; box-shadow:0 1px 1px rgba(0,0,0,.06);
+}
+
 footer .container-page { padding-top:14px; padding-bottom:18px; }
 
-/* ---------- Formulario BC ---------- */
 .form-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -194,14 +176,14 @@ footer .container-page { padding-top:14px; padding-bottom:18px; }
 .form-field label{
   display:block;
   font-weight:600;
-  color:#0f172a;       /* slate-900 */
+  color:#0f172a;
   margin-bottom: 6px;
 }
 
 .input, .select{
   width:100%;
   background:#fff;
-  border:1px solid #d1d5db;     /* slate-300 */
+  border:1px solid #d1d5db;
   border-radius:10px;
   padding:10px 12px;
   line-height:1.4;
@@ -221,5 +203,5 @@ footer .container-page { padding-top:14px; padding-bottom:18px; }
   display:block;
   margin-top:6px;
   font-size:.85rem;
-  color:#64748b;       /* slate-500 */
+  color:#64748b;
 }
