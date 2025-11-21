@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import Table from "../components/Table";
 import TableToolbar from "../components/TableToolbar";
-import { toRows } from "../utils/inventoryStorage";
+import { toRows } from "../utils/inventoryApi.js";
 import { add, existsDuplicate, lastByRut, byRut } from "../utils/prescripcionesStorage";
 
 export default function Prescripciones() {

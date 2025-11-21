@@ -1,8 +1,10 @@
+// src/App.jsx
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import PrivateRoute from "./auth/PrivateRoute"; // <- si usas rutas protegidas
 
 const MENU = [
   { to: "/", label: "Inicio" },
@@ -19,7 +21,6 @@ const MENU = [
   { to: "/ayuda", label: "Ayuda" },
 ];
 
-// Carga diferida (lazy) — mantiene la idea de tu compañero
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Stock = lazy(() => import("./pages/Stock.jsx"));
@@ -42,21 +43,27 @@ export default function App() {
       <main className="container-page grow">
         <Suspense fallback={<div className="card">Cargando…</div>}>
           <Routes>
+            {/* Públicas */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
 
-            {/* Stock y subrutas */}
-            <Route path="/stock" element={<Stock />} />
-            <Route path="/stock/agregar" element={<StockAdd />} />
-            <Route path="/stock/bajas" element={<StockBajas />} />
+            {/* Privadas (requieren sesión) */}
+            <Route element={<PrivateRoute />}>
+              {/* Stock y subrutas */}
+              <Route path="/stock" element={<Stock />} />
+              <Route path="/stock/agregar" element={<StockAdd />} />
+              <Route path="/stock/bajas" element={<StockBajas />} />
 
-            {/* Otros módulos */}
-            <Route path="/prescripciones" element={<Prescripciones />} />
-            <Route path="/prescripciones-pendientes" element={<PrescripcionesPendientes />} />
-            <Route path="/informes" element={<Informes />} />
-            <Route path="/reservas" element={<Reservas />} />
-            <Route path="/recordatorios" element={<Recordatorios />} />
-            <Route path="/reportes" element={<Reportes />} />
+              {/* Otros módulos */}
+              <Route path="/prescripciones" element={<Prescripciones />} />
+              <Route path="/prescripciones-pendientes" element={<PrescripcionesPendientes />} />
+              <Route path="/informes" element={<Informes />} />
+              <Route path="/reservas" element={<Reservas />} />
+              <Route path="/recordatorios" element={<Recordatorios />} />
+              <Route path="/reportes" element={<Reportes />} />
+            </Route>
+
+            {/* Pública */}
             <Route path="/ayuda" element={<Ayuda />} />
 
             {/* Fallback */}
@@ -69,4 +76,3 @@ export default function App() {
     </div>
   );
 }
-

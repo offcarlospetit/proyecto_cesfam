@@ -1,3 +1,15 @@
+import { seedAllDemo } from '../dev/seedInventory.js';
+
+export function DevTools() {
+    return (
+        <div className="card">
+            <button className={"btn-opcion"} onClick={() => seedAllDemo()}>
+                Cargar demo (todos los módulos)
+            </button>
+        </div>
+    );
+}
+
 export default function Home() {
     return (
         <section className="space-y-4">
@@ -13,6 +25,7 @@ export default function Home() {
                     <h3 className="text-lg font-semibold">Reportes Transversales</h3>
                     <p>KPIs, atrasos, reservas y stock bajo crítico.</p>
                 </div>
+                <DevTools />
             </div>
         </section>
     );

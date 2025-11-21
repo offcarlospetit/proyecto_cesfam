@@ -59,7 +59,7 @@ export const DrawerDetallePrescripciones = ({ open, onClose, presc }) => {
         </div>
 
         <div className="acciones-detalle">
-          <button className="btn-primary" disabled>Preparar</button>
+          <button className="btn-primary">Preparar</button>
         </div>
       </aside>
     </div>

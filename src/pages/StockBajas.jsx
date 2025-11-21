@@ -8,7 +8,7 @@ import {
     confirmarDesecho,
     resumenTotales,
     toRows,
-} from "../utils/inventoryStorage";
+} from "../utils/inventoryApi.js";
 
 export default function StockBajas() {
     const [tot, setTot] = useState({ totalDisp: 0, totalResv: 0, totalPend: 0, totalFis: 0 });

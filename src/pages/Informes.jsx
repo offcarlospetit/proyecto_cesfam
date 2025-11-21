@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Table from "../components/Table";
 import TableToolbar from "../components/TableToolbar";
-import { ensureInit, toRows } from "../utils/inventoryStorage";
+import { ensureInit, toRows } from "../utils/inventoryApi.js";
 import { toCsv, downloadCsv } from "../utils/csv";
 
 const FILTERS = [

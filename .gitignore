@@ -25,3 +25,4 @@ dist-ssr
 *.ini
 *.bat
 run_proyecto_cesfam.bat
+.DS_Store

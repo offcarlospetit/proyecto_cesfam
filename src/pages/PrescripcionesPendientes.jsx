@@ -1,10 +1,9 @@
-import { useMemo, useRef, useState } from "react";
-import { PRESCRIPCIONES_MOCK, nextPrescripcionId } from "../data/prescripciones.mock";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DrawerDetallePrescripciones } from "../components/DrawerDetallePrescripciones";
 import { formatFecha } from "../utils/dates";
+import { listPrescripciones, updatePrescripcionEstado } from "../utils/prescripcionesApi";
 import "../assets/prescripciones-pendientes.css";
 
-/** ======== Utilidades ======== */
 const toCSV = (rows) => {
   const header = ["ID", "Folio", "Fecha", "Paciente", "Médico", "Ítems", "Estado"];
   const body = rows.map((p) => [
@@ -16,7 +15,9 @@ const toCSV = (rows) => {
     p.items?.length ?? 0,
     p.estado,
   ]);
-  return [header, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  return [header, ...body]
+    .map((r) => r.map((c) => `"${String(c ?? "").replace(/"/g, '""')}"`).join(","))
+    .join("\n");
 };
 const download = (filename, text) => {
   const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
@@ -26,7 +27,8 @@ const download = (filename, text) => {
   URL.revokeObjectURL(url);
 };
 
-function Fila({ p, onVer }) {
+function Fila({ p, onVer, onPreparar, preparando }) {
+  const canPreparar = p.estado === "Pendiente";
   return (
     <tr>
       <td>{p.id}</td>
@@ -38,7 +40,14 @@ function Fila({ p, onVer }) {
       <td><span className="chip" data-estado={p.estado}>{p.estado}</span></td>
       <td className="col-actions">
         <div className="btn-row">
-          <button className="btn-mini" disabled>Preparar</button>
+          <button
+            className="btn-mini"
+            disabled={!canPreparar || preparando}
+            onClick={() => onPreparar(p)}
+            title={canPreparar ? "Cambiar a 'En preparación'" : "Sólo para prescripciones Pendiente"}
+          >
+            {preparando ? "…" : "Preparar"}
+          </button>
           <button className="btn-mini" onClick={() => onVer(p)}>Ver</button>
         </div>
       </td>
@@ -46,55 +55,57 @@ function Fila({ p, onVer }) {
   );
 }
 
-/** ======== Página ======== */
 export default function PrescripcionesPendientes() {
-  // Clonado profundo para poder mutar localmente sin tocar el mock original
-  const [data, setData] = useState(() =>
-    (typeof structuredClone === "function")
-      ? structuredClone(PRESCRIPCIONES_MOCK)
-      : JSON.parse(JSON.stringify(PRESCRIPCIONES_MOCK))
-  );
+  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState([]);
 
   const [query, setQuery] = useState("");
   const [estado, setEstado] = useState("Todos");
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
+  const [savingId, setSavingId] = useState(null);
   const lastFocus = useRef(null);
 
-  const agregarDemo = () => {
-    setData(prev => ([
-      ...prev,
-      {
-        id: nextPrescripcionId(prev),
-        folio: "PR-2025-00999",
-        fecha: new Date().toISOString(),
-        paciente: { id: "PAC-999", nombre: "Paciente Demo", doc: "11.111.111-1" },
-        medico: { id: "MED-000", nombre: "Dr. Demo" },
-        estado: "Pendiente",
-        items: [{ articuloId: "A-999", nombre: "Demo 1", solicitado: 1, entregado: 0 }]
-      }
-    ]));
-  };
-  
+  // Cargar lista desde API
+  async function load() {
+    setLoading(true);
+    const data = await listPrescripciones({ estado, q: query }).catch(() => []);
+    setRows(data);
+    setLoading(false);
+  }
+  useEffect(() => {
+    load();
+  }, [estado, query]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return data.filter(p => {
+    return rows.filter(p => {
       const matchQuery = !q || [p.folio, p.paciente?.nombre, p.medico?.nombre]
         .some(v => (v ?? "").toLowerCase().includes(q));
       const matchEstado = (estado === "Todos") || p.estado === estado;
       return matchQuery && matchEstado;
     });
-  }, [data, query, estado]);
+  }, [rows, query, estado]);
 
   const onVer = (p) => { lastFocus.current = document.activeElement; setSelected(p); setOpen(true); };
   const onClose = () => { setOpen(false); if (lastFocus.current?.focus) lastFocus.current.focus(); };
 
   const exportCSV = () => download("prescripciones.csv", toCSV(filtered));
 
+  async function onPreparar(p) {
+    try {
+      setSavingId(p.id);
+      await updatePrescripcionEstado(p.id, "En preparación");
+      await load();
+    } catch (e) {
+      alert("No fue posible actualizar el estado. Revisa que exista el endpoint PATCH /prescripciones/:id o POST /prescripciones/:id/estado.");
+    } finally {
+      setSavingId(null);
+    }
+  }
+
   return (
     <>
-      {/* Encabezado + nav no se incluyen aquí; en tu layout global puedes renderizarlos. 
-          Esta vista renderiza el <main> y el drawer según tu HTML.  */}
       <main className="container">
         <section className="toolbar" aria-label="Herramientas">
           <input
@@ -126,6 +137,7 @@ export default function PrescripcionesPendientes() {
         <section className="panel">
           <div className="panel-header">
             <h2>Cola de prescripciones</h2>
+            {loading && <small className="text-slate-500">Cargando…</small>}
           </div>
           <div className="table-wrap">
             <table className="table" aria-describedby="tabla-ayuda">
@@ -145,7 +157,15 @@ export default function PrescripcionesPendientes() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((p) => <Fila key={p.id} p={p} onVer={onVer} />)}
+                {filtered.map((p) => (
+                  <Fila
+                    key={p.id}
+                    p={p}
+                    onVer={onVer}
+                    onPreparar={onPreparar}
+                    preparando={savingId === p.id}
+                  />
+                ))}
               </tbody>
             </table>
           </div>
