@@ -13,9 +13,32 @@ import {
 export default function StockBajas() {
     const [tot, setTot] = useState({ totalDisp: 0, totalResv: 0, totalPend: 0, totalFis: 0 });
     const [rows, setRows] = useState([]);
-    const refresh = () => { setTot(resumenTotales()); setRows(toRows()); };
+    const refresh = async () => {
+        try {
+            // Ejecutamos ambas en paralelo
+            const [totResp, rowsResp] = await Promise.all([
+                resumenTotales(),
+                toRows(),
+            ]);
 
-    useEffect(() => { ensureInit(); refresh(); }, []);
+            setTot(
+                totResp || { totalDisp: 0, totalResv: 0, totalPend: 0, totalFis: 0 }
+            );
+            setRows(Array.isArray(rowsResp) ? rowsResp : []);
+
+            // Si quieres loguear, hazlo con las respuestas crudas:
+            console.log("refresh RESP", { totResp, rowsResp });
+        } catch (err) {
+            console.error("Error refrescando inventario", err);
+            setRows([]);
+        }
+    };
+    useEffect(() => {
+        ensureInit();
+        (async () => {
+            await refresh();
+        })();
+    }, []);
 
     const columns = useMemo(() => [
         { key: "codigo", header: "Código" },
@@ -45,9 +68,14 @@ export default function StockBajas() {
     }
 
     const [q, setQ] = useState("");
-    const filtered = rows.filter(r =>
-        !q || [r.codigo, r.descripcion].some(x => String(x).toLowerCase().includes(q.toLowerCase()))
+    const filtered = (Array.isArray(rows) ? rows : []).filter(r =>
+        !q ||
+        [r.codigo, r.descripcion].some(x =>
+            String(x).toLowerCase().includes(q.toLowerCase())
+        )
     );
+
+    console.log({ tot, rows });
 
     return (
         <section className="space-y-4">

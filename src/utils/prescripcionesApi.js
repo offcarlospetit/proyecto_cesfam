@@ -85,7 +85,7 @@ export async function listPrescripciones({ estado, q } = {}) {
 export async function updatePrescripcionEstado(id, estado) {
   try {
     return await apiFetch(`/prescripciones/${id}`, {
-      method: "PATCH",
+      method: "POST",
       body: { estado },
     });
   } catch {

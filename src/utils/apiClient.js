@@ -1,4 +1,4 @@
-const BASE_URL = "https://api-cesfam.vercel.app/api";
+const BASE_URL = "http://localhost:3001/api";
 
 async function apiFetch(path, { method = "GET", body, headers } = {}) {
   const hasBody = body !== undefined && body !== null;
