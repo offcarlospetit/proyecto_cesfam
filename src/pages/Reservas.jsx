@@ -3,48 +3,42 @@ import { useEffect, useMemo, useState } from "react";
 import { listReservas, createReserva, setEstadoReserva, confirmarReserva } from "../utils/reservasApi";
 import { listInventoryRows, hayStock } from "../utils/inventoryApi";
 
-// Mapeo visual (UI) según estado real de backend + disponibilidad
 function tone(uiEstado) {
   switch (uiEstado) {
     case "DISPONIBLE": return "pill";
     case "AVISADO": return "pill pill-yellow";
     case "RETIRADA": return "pill pill-green";
     case "CADUCADA": return "pill pill-red";
-    default: return "pill pill-orange"; // ESPERA_STOCK
+    default: return "pill pill-orange";
   }
 }
 
-// Derivar estado "UI" a partir del estado backend y disponibilidad
-// - backend: pendiente | notificada | confirmada | cancelada
-// - UI: ESPERA_STOCK | DISPONIBLE | AVISADO | RETIRADA | CADUCADA
 function estadoUI(reserva, invRows) {
   if (reserva.estado === "confirmada") return "RETIRADA";
   if (reserva.estado === "cancelada") return "CADUCADA";
   if (reserva.estado === "notificada") return "AVISADO";
-  // pendiente → chequear si hay stock suficiente
   const disponible = hayStock(invRows, reserva.codigo, reserva.cantidad);
   return disponible ? "DISPONIBLE" : "ESPERA_STOCK";
 }
 
 export default function Reservas() {
-  // form
   const [rut, setRut] = useState("");
-  const [codigo, setCodigo] = useState("");      // ahora trabajamos con CODIGO
+  const [codigo, setCodigo] = useState("");
   const [cantidad, setCantidad] = useState(30);
-  const [canal, setCanal] = useState("");        // se usa para UI; backend no lo necesita
+  const [canal, setCanal] = useState("");
   const [consent, setConsent] = useState("");
 
-  // data
-  const [invRows, setInvRows] = useState([]);    // lista de inventario para el select
-  const [rows, setRows] = useState([]);          // reservas desde API
+  const [invRows, setInvRows] = useState([]);
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function refresh() {
     setLoading(true);
     const [inventario, reservas] = await Promise.all([
       listInventoryRows(),
-      listReservas(), // puedes filtrar por rut/estado
+      listReservas(),
     ]);
+    console.log({ reservas });
     setInvRows(inventario || []);
     setRows(reservas || []);
     setLoading(false);
@@ -55,10 +49,6 @@ export default function Reservas() {
   }, []);
 
   const filas = useMemo(() => {
-    // Derivamos campos de presentación:
-    // - paciente: si la API no lo trae, mostramos rut
-    // - medicamento: tomamos la descripción desde inventario por código
-    // - estado UI: a partir de estado backend + stock
     const byCodigo = new Map(invRows.map(r => [r.codigo, r]));
     return rows
       .slice()
@@ -69,7 +59,7 @@ export default function Reservas() {
         const ui = estadoUI(r, invRows);
         return {
           ...r,
-          paciente: r.nombre || r.rut,        // fallback si no hay nombre
+          paciente: r.nombre || r.rut,
           medicamentoDesc: medDesc,
           uiEstado: ui,
           cls: tone(ui),
@@ -86,8 +76,6 @@ export default function Reservas() {
     }
     try {
       await createReserva({ rut, codigo, cantidad });
-      // Nota: Si deseas registrar notificación inmediata, puedes llamar:
-      // await apiFetch("/notificaciones", { method:"POST", body:{ tipo:"aviso", destinatario: rut, mensaje: "Se registró su reserva" }})
       setCantidad(30); setCanal(""); setConsent("");
       await refresh();
       alert("Reserva registrada.");
@@ -107,7 +95,6 @@ export default function Reservas() {
   }
 
   async function onMarcarRetirada(id) {
-    console.log("Marcar retirada de reserva", id);
     try {
       await confirmarReserva(id);
       await refresh();
