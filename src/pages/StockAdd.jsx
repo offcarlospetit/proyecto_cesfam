@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";                 // 👈 nuevo
 import TableToolbar from "../components/TableToolbar";
 import { Table } from "../components/Table";
-import { ensureInit, upsertIngreso, resumenTotales, toRows } from "../utils/inventoryApi.js.js";
+import { ensureInit, upsertIngreso, resumenTotales, toRows } from "../utils/inventoryApi.js";
 
 export default function StockAdd() {
   const [tot, setTot] = useState({ totalDisp: 0, totalResv: 0, totalPend: 0, totalFis: 0 });
