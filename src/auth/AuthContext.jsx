@@ -1,10 +1,9 @@
-// src/auth/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { apiFetch } from '../utils/apiClient.js';
 const AuthCtx = createContext(null);
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);        // { ok: true, user: {...} } ó {email, nombre}
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,8 +15,8 @@ export function AuthProvider({ children }) {
     }, []);
 
     async function login(email, password) {
-        const res = await apiFetch('/auth/login', { method: 'POST', json: { email, password } });
-        // El backend devuelve { ok: true, user }
+        console.log({ email, password });
+        const res = await apiFetch('/auth/login', { method: 'POST', body: { email, password } });
         if (!res?.ok) throw new Error('Credenciales inválidas');
         setUser(res.user);
         localStorage.setItem('cesfam:user', JSON.stringify(res.user));
